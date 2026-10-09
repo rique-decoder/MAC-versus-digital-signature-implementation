@@ -6,7 +6,7 @@ class Remetente:
         self.chave_secreta = chave_secreta
 
     def enviar_mensagem(self, mensagem):
-        """Gera uma tag HMAC para autenticar a mensagem e verificar sua integridade."""
+        """Gera uma tag HMAC para autenticar a mensagem"""
         tag_mac = hmac.new(
             self.chave_secreta.encode(),
             mensagem.encode(),
@@ -64,6 +64,8 @@ print("\nA mensagem original passou na verificação de Bob?")
 print(Bob.verificar_mensagem(mensagem_alice, tag_hmac))
 
 print("\nO que acontece se um invasor mudar a mensagem?")
+
+# Cenario de invasao
 
 Eve = Invasor(mensagem_alice, tag_hmac)
 mensagem_eve, tag_interceptada = Eve.alterar_mensagem()
