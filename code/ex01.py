@@ -5,7 +5,7 @@ class Usuario:
     def __init__(self, chave_secreta=None):
         self.chave_secreta = chave_secreta
 
-    def calcular_tag(self, mensagem):
+    def _calcular_tag(self, mensagem):
         """Calcula o HMAC-SHA256 usando a chave secreta deste usuário."""
         if self.chave_secreta is None:
             raise ValueError("Este usuário não possui a chave secreta.")
@@ -18,12 +18,12 @@ class Usuario:
 
     def enviar_mensagem(self, mensagem):
         """Retorna a mensagem original junto com sua tag HMAC."""
-        tag_mac = self.calcular_tag(mensagem)
+        tag_mac = self._calcular_tag(mensagem)
         return mensagem, tag_mac
 
     def verificar_mensagem(self, mensagem, tag_mac):
         """Recalcula a tag e compara com a recebida."""
-        tag_mac_calculada = self.calcular_tag(mensagem)
+        tag_mac_calculada = self._calcular_tag(mensagem)
         return hmac.compare_digest(tag_mac_calculada, tag_mac)
 
     def alterar_mensagem(self, mensagem):
